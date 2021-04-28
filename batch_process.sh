@@ -6,7 +6,7 @@
 ##########################################################
 
 
-subj_list=`ls -d -- acdc*/`
+subj_list=`ls -d -- acdc*/ | perl -ple 'chop'`
 
 mkdir nifti
 cd nifti/
