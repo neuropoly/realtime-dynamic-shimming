@@ -49,17 +49,23 @@ for ((i=0; i< ${#subj_list[@]}; i++ )); do
     sct_maths -i $rtSHIM_RUN2_file -mean t -o nifti/${subj_list[$i]}/rtSHIM_run2_averaged.nii.gz
     sct_maths -i $rtSHIM_RUN3_file -mean t -o nifti/${subj_list[$i]}/rtSHIM_run3_averaged.nii.gz
 
+    sct_create_mask -i nifti/${subj_list[$i]}/spinal_seg.nii.gz -p centerline,nifti/${subj_list[$i]}/spinal_seg.nii.gz -size 45mm -f gaussian -o nifti/${subj_list[$i]}/mask_cord.nii.gz 
+
     # register mean GRE to T1w scan
-    sct_register_multimodal -i nifti/${subj_list[$i]}/noSHIM_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_noSHIM_averaged
+    sct_register_multimodal -i nifti/${subj_list[$i]}/noSHIM_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_noSHIM_averaged -qc nifti/${subj_list[$i]}/qc
+    
+    # sct_register_multimodal -i nifti/${subj_list[$i]}/noSHIM_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_noSHIM_averaged -qc nifti/${subj_list[$i]}/qc
+    # TODO: do a loop
+    # TODO: do not output in specific folder (not needed)
+    sct_register_multimodal -i nifti/${subj_list[$i]}/staticzSHIM_run1_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_staticzSHIM_run1_averaged -qc nifti/${subj_list[$i]}/qc
+    sct_register_multimodal -i nifti/${subj_list[$i]}/staticzSHIM_run2_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_staticzSHIM_run2_averaged -qc nifti/${subj_list[$i]}/qc
+    sct_register_multimodal -i nifti/${subj_list[$i]}/staticzSHIM_run3_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_staticzSHIM_run3_averaged -qc nifti/${subj_list[$i]}/qc
 
-    sct_register_multimodal -i nifti/${subj_list[$i]}/staticzSHIM_run1_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_staticzSHIM_run1_averaged
-    sct_register_multimodal -i nifti/${subj_list[$i]}/staticzSHIM_run2_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_staticzSHIM_run2_averaged
-    sct_register_multimodal -i nifti/${subj_list[$i]}/staticzSHIM_run3_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_staticzSHIM_run3_averaged
+    sct_register_multimodal -i nifti/${subj_list[$i]}/rtSHIM_run1_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_rtSHIM_run1_averaged -qc nifti/${subj_list[$i]}/qc
+    sct_register_multimodal -i nifti/${subj_list[$i]}/rtSHIM_run2_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_rtSHIM_run2_averaged -qc nifti/${subj_list[$i]}/qc
+    sct_register_multimodal -i nifti/${subj_list[$i]}/rtSHIM_run3_averaged.nii.gz -d $T1W_file -dseg nifti/${subj_list[$i]}/spinal_seg.nii.gz -m nifti/${subj_list[$i]}/mask_cord.nii.gz -param step=1,type=im,metric=cc,algo=slicereg,poly=2,smooth=1 -ofolder nifti/${subj_list[$i]}/warp_rtSHIM_run3_averaged -qc nifti/${subj_list[$i]}/qc
 
-    sct_register_multimodal -i nifti/${subj_list[$i]}/rtSHIM_run1_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_rtSHIM_run1_averaged
-    sct_register_multimodal -i nifti/${subj_list[$i]}/rtSHIM_run2_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_rtSHIM_run2_averaged
-    sct_register_multimodal -i nifti/${subj_list[$i]}/rtSHIM_run3_averaged.nii.gz -d nifti/${subj_list[$i]}/spinal_seg.nii.gz -ofolder nifti/${subj_list[$i]}/warp_rtSHIM_run3_averaged
-
+    # TODO: reactive the code below, now that the destination image is the T1w scan
     # apply inverse transformation to bring seg to the space of the GRE T2*
     # note: this step isn't necessary, sct_register_multimodal already seems to output registered images
     #sct_apply_transfo -i nifti/${subj_list[$i]}/spinal_seg.nii.gz -w nifti/${subj_list[$i]}/warp_noSHIM_averaged/warp_spinal_seg2noSHIM_averaged.nii.gz -x linear -d nifti/${subj_list[$i]}/noSHIM_averaged.nii.gz -o nifti/${subj_list[$i]}/spinal_seg_reg.nii.gz
