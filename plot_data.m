@@ -4,14 +4,20 @@ dir_list=dir_list(~ismember({dir_list.name},{'.','..'}));
 
 
 for k = 1:size(dir_list,1)
-
-    NOshim = readtable(['nifti/' dir_list(k).name '/no_shim_extract_metric.csv']);
-    STATICzshim_run1 = readtable(['nifti/' dir_list(k).name '/staticzSHIM_run1_extract_metric.csv']);
-    STATICzshim_run2 = readtable(['nifti/' dir_list(k).name '/staticzSHIM_run2_extract_metric.csv']);
-    STATICzshim_run3 = readtable(['nifti/' dir_list(k).name '/staticzSHIM_run3_extract_metric.csv']);
-    rtshim_run1 = readtable(['nifti/' dir_list(k).name '/rtSHIM_run1_extract_metric.csv']);
-    rtshim_run2 = readtable(['nifti/' dir_list(k).name '/rtSHIM_run2_extract_metric.csv']);
-    rtshim_run3 = readtable(['nifti/' dir_list(k).name '/rtSHIM_run3_extract_metric.csv']);
+    fname = dir('nifti/acdc_135_high_res/*NOSHIM*run1*.csv')
+    NOshim = readtable(fullfile(fname.folder, fname.name));
+    fname = dir('nifti/acdc_135_high_res/*staticzSHIM*run1*.csv')
+    STATICzshim_run1 = readtable(fullfile(fname.folder, fname.name));
+    fname = dir('nifti/acdc_135_high_res/*staticzSHIM*run2*.csv')
+    STATICzshim_run2 = readtable(fullfile(fname.folder, fname.name));
+    fname = dir('nifti/acdc_135_high_res/*staticzSHIM*run3*.csv')
+    STATICzshim_run3 = readtable(fullfile(fname.folder, fname.name));
+    fname = dir('nifti/acdc_135_high_res/*rtSHIM*run1*.csv')
+    rtshim_run1 = readtable(fullfile(fname.folder, fname.name));
+    fname = dir('nifti/acdc_135_high_res/*rtSHIM*run2*.csv')
+    rtshim_run2 = readtable(fullfile(fname.folder, fname.name));
+    fname = dir('nifti/acdc_135_high_res/*rtSHIM*run3*.csv')
+    rtshim_run3 = readtable(fullfile(fname.folder, fname.name));
 
     for i = 1:size(NOshim,1)
         mean_STATICzshim(i) = mean([STATICzshim_run1.WA__(i), STATICzshim_run2.WA__(i), STATICzshim_run3.WA__(i)]);
