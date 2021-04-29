@@ -52,10 +52,10 @@ for ((i=0; i< ${#subj_list[@]}; i++ )); do
     sct_apply_transfo -i spinal_seg.$ext -d ${file}_mean.$ext -w warp_${file_t1w}2${file}_mean.$ext -o spinal_seg_reg_$file.$ext
     # split multiecho file, this is required for sct_extract_metric
     sct_image -i ${file}.$ext -split t
-    # extract the mean across slices and average across slices
+    # extract the mean across slices
     fnamesplits=$(ls ${file}_T*.$ext)
     for fnamesplit in ${fnamesplits[@]}; do
-      sct_extract_metric -i $fnamesplit -f spinal_seg_reg_$file.$ext -method wa -o $file.csv -perslice 0 -append 1
+      sct_extract_metric -i $fnamesplit -f spinal_seg_reg_$file.$ext -method wa -o $file.csv -perslice 1 -append 1
     done
   done
   cd ..
