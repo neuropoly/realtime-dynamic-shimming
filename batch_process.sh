@@ -6,19 +6,28 @@
 ##########################################################
 
 
-subj_list=`ls -d -- acdc*/ | perl -ple 'chop'`
-
+# TODO: this PATH_DATA will become an input of this script at some point
+PATH_DATA=`pwd`
+# TODO: subj_list will be replaced by $SUBJECT with sct_run_batch
+subj_list=(acdc_135_high_res acdc_135_low_res)
 mkdir nifti
-cd nifti/
-mkdir ${subj_list[@]}
-cd ..
 
 ################
 
+cd nifti
+
 for ((i=0; i< ${#subj_list[@]}; i++ )); do
 
+    # Introduce variables that are following conventions of sct_run_batch
+    SUBJECT=${subj_list[$i]}
+    
+    # create dir, go in it
+    # Note: in future refactoring, processing will be done in each subject folder
+    mkdir $SUBJECT
+    cd $SUBJECT
+
     # convert dicoms to nifti
-    dcm2niix -o nifti/${subj_list[$i]} -m y ${subj_list[$i]}
+    dcm2niix -o . -m y $PATH_DATA/$SUBJECT
 
     # save filename variables
     T1W_file=$(ls nifti/${subj_list[$i]}/*.nii | grep T1w)
