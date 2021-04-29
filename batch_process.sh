@@ -60,6 +60,3 @@ for ((i=0; i< ${#subj_list[@]}; i++ )); do
   done
   cd ..
 done
-
-# run matlab script to plot the data
-matlab -nodisplay -nodesktop -r "run('./plot_data.m');exit;"
