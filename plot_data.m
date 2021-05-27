@@ -37,16 +37,29 @@ for k = 1:size(dir_list,1)
     
     figure1 = figure; hold on; j=1;    
     for i = 1:n_slices:size(NOshim,1)
+        
+        NOshim_std_across_slices(j) = std(NOshim.WA__(i:i+n_slices-1));
+        mean_STATICzshim_std_across_slices(j) = std(mean_STATICzshim(i:i+n_slices-1));
+        mean_rtshim_std_across_slices(j) = std(mean_rtshim(i:i+n_slices-1));
+        
         subplot(nTE,1,j); 
         hold on;
+        
         plot(100*NOshim.WA__(i:i+n_slices-1)./mean(NOshim.WA__(i:i+n_slices-1)),char(marker(j)),'Color','b', 'MarkerFaceColor', 'b')
         plot(100*mean_STATICzshim(i:i+n_slices-1)./mean(mean_STATICzshim(i:i+n_slices-1)),char(marker(j)),'Color','r', 'MarkerFaceColor', 'r')
         plot(100*mean_rtshim(i:i+n_slices-1)./mean(mean_rtshim(i:i+n_slices-1)),char(marker(j)),'Color','g', 'MarkerFaceColor', 'g')
+        
+        ylimits = ylim;
+        ymax = ylimits(2);
+        text(0, ymax, ['no shim std = ',num2str(NOshim_std_across_slices(j))]);
+        text(0, 0.9*ymax, ['static z-shim std = ',num2str(mean_STATICzshim_std_across_slices(j))]);
+        text(0, 0.8*ymax, ['rt shim std = ',num2str(mean_rtshim_std_across_slices(j))]);
+        
         title(strcat('TE',num2str(j)));
         xlabel('slice number');
         ylabel('% of mean across slices');
         hold off;
-        j=(j+1);
+        j=(j+1); 
     end
     legend('no shim','static z-shim', 'rt shim');
     saveas(figure1, ['fig1_',char(dir_list(k).name),'.fig'])
