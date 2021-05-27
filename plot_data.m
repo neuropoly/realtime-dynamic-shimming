@@ -39,12 +39,12 @@ for k = 1:size(dir_list,1)
     for i = 1:n_slices:size(NOshim,1)
         subplot(nTE,1,j); 
         hold on;
-        plot(NOshim.WA__(i:i+n_slices-1),char(marker(j)),'Color','b', 'MarkerFaceColor', 'b')
-        plot(mean_STATICzshim(i:i+n_slices-1),char(marker(j)),'Color','r', 'MarkerFaceColor', 'r')
-        plot(mean_rtshim(i:i+n_slices-1),char(marker(j)),'Color','g', 'MarkerFaceColor', 'g')
+        plot(100*NOshim.WA__(i:i+n_slices-1)./mean(NOshim.WA__(i:i+n_slices-1)),char(marker(j)),'Color','b', 'MarkerFaceColor', 'b')
+        plot(100*mean_STATICzshim(i:i+n_slices-1)./mean(mean_STATICzshim(i:i+n_slices-1)),char(marker(j)),'Color','r', 'MarkerFaceColor', 'r')
+        plot(100*mean_rtshim(i:i+n_slices-1)./mean(mean_rtshim(i:i+n_slices-1)),char(marker(j)),'Color','g', 'MarkerFaceColor', 'g')
         title(strcat('TE',num2str(j)));
         xlabel('slice number');
-        ylabel('signal [arb]');
+        ylabel('% of mean across slices');
         hold off;
         j=(j+1);
     end
@@ -56,13 +56,13 @@ for k = 1:size(dir_list,1)
     for i = 1:n_slices
         subplot(6,2,i); 
         hold on;
-        plot(NOshim.WA__(i:n_slices:end),'-o','Color','b', 'MarkerFaceColor', 'b')
-        plot(mean_STATICzshim(i:n_slices:end),'-x','Color','r', 'MarkerFaceColor', 'r')
-        plot(mean_rtshim(i:n_slices:end),'-s','Color','g', 'MarkerFaceColor', 'g')
+        plot(100*NOshim.WA__(i:n_slices:end)./NOshim.WA__(i),'-o','Color','b', 'MarkerFaceColor', 'b')
+        plot(100*mean_STATICzshim(i:n_slices:end)./mean_STATICzshim(i),'-x','Color','r', 'MarkerFaceColor', 'r')
+        plot(100*mean_rtshim(i:n_slices:end)./mean_rtshim(i),'-s','Color','g', 'MarkerFaceColor', 'g')
         title(strcat('slice',num2str(i)));
         xlabel('echo number');
-        ylabel('signal [arb]');
-        hold off;
+        ylabel('signal normalized to TE1');
+        hold off; 
     end
     legend('no shim','static z-shim', 'rt shim');
     %sgtitle('Signal decay vs. echo number for slices 1 - 12'); 
