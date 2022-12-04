@@ -8,3 +8,6 @@ To run the notebook in Google Colab, click here:
 # $B_0$ field mapping tutorial
 
 This repository also inccludes a Google colab notebook $B_0$ field mapping tutorial powered by shimming toolbox.
+
+To run the notebook in Google Colab, click here: 
+[![gcolab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neuropoly/realtime-dynamic-shimming/blob/main/B0_field_mapping_tutorial.ipynb)
