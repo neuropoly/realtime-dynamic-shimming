@@ -10,4 +10,4 @@ To run the notebook in Google Colab, click here:
 This repository also inccludes a Google colab notebook $B_0$ field mapping tutorial powered by shimming toolbox.
 
 To run the notebook in Google Colab, click here: 
-[![gcolab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gdrive/1Oh4NhlFkKsiLohzAi9fzQ6G1cmSBD9pN?usp=share_link)
+[![gcolab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Oh4NhlFkKsiLohzAi9fzQ6G1cmSBD9pN?usp=share_link)
